@@ -1,0 +1,15 @@
+{
+  "name": "unitymodule.common.singular",
+  "version": "1.0.0",
+  "displayName": "UnityModule.Common.Singular",
+  "author": {
+    "name": "dante",
+    "email": "are2341@nate.com"
+  },
+  "dependencies": {
+	"unitymodule.common.define": "https://gitlab.com/9tapmodule.repository/unitymodule_common_define_client.git#v1.0.0",
+	"unitymodule.common.access": "https://gitlab.com/9tapmodule.repository/unitymodule_common_access_client.git#v1.0.0",
+	"unitymodule.common.func": "https://gitlab.com/9tapmodule.repository/unitymodule_common_func_client.git#v1.0.0",
+	"unitymodule.common.utility": "https://gitlab.com/9tapmodule.repository/unitymodule_common_utility_client.git#v1.0.0"
+  }
+}
