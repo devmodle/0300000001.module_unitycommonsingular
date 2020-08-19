@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-#if SINGULAR_ENABLE
+#if SINGULAR_MODULE_ENABLE
 //! 싱귤러 관리자
 public partial class CSingularManager : CSingleton<CSingularManager> {
 	#region 프로퍼티
@@ -23,4 +23,4 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	}
 	#endregion			// 함수
 }
-#endif			// #if SINGULAR_ENABLE
+#endif			// #if SINGULAR_MODULE_ENABLE

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-#if SINGULAR_ENABLE && SINGULAR_ANALYTICS_ENABLE
-#if PURCHASE_ENABLE
+#if SINGULAR_MODULE_ENABLE && SINGULAR_ANALYTICS_ENABLE
+#if PURCHASE_MODULE_ENABLE
 using UnityEngine.Purchasing;
-#endif			// #if PURCHASE_ENABLE
+#endif			// #if PURCHASE_MODULE_ENABLE
 
 //! 싱귤러 관리자 - 분석
 public partial class CSingularManager : CSingleton<CSingularManager> {
@@ -62,7 +62,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	#endregion			// 함수
 
 	#region 조건부 함수
-#if PURCHASE_ENABLE
+#if PURCHASE_MODULE_ENABLE
 	//! 결제 로그를 전송한다
 	public void SendPurchaseLog(Product a_oProduct, Dictionary<string, object> a_oDataList) {
 		CFunc.ShowLog("CSingularManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
@@ -73,7 +73,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 	}
-#endif			// #if PURCHASE_ENABLE
+#endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 함수
 }
-#endif			// #if SINGULAR_ENABLE && SINGULAR_ANALYTICS_ENABLE
+#endif			// #if SINGULAR_MODULE_ENABLE && SINGULAR_ANALYTICS_ENABLE
