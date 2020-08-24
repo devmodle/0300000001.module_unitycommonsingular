@@ -14,6 +14,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public virtual void Init(System.Action<CSingularManager, bool> a_oCallback) {
 		CFunc.ShowLog("CSingularManager.Init");
 
+		// 초기화 가능 할 경우
 		if(!this.IsInit && CAccess.IsMobilePlatform()) {
 			this.IsInit = true;
 			SingularSDK.InitializeSingularSDK();

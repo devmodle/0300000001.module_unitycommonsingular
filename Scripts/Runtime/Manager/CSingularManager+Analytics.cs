@@ -15,6 +15,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CAccess.Assert(a_oID.ExIsValid());
 		CFunc.ShowLog("CSingularManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
+		// 초기화 되었을 경우
 		if(this.IsInit) {
 			SingularSDK.SetCustomUserId(a_oID);
 		}
@@ -40,6 +41,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CFunc.ShowLog("CSingularManager.SendLog: {0}, {1}", KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
 
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+		// 초기화 되었을 경우
 		if(this.IsInit) {
 			var oDataList = a_oDataList ?? new Dictionary<string, object>();
 
@@ -68,6 +70,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CFunc.ShowLog("CSingularManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+		// 초기화 되었을 경우
 		if(this.IsInit) {
 			SingularSDK.InAppPurchase(myProduct, a_oDataList);
 		}
