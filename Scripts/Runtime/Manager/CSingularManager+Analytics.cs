@@ -15,12 +15,14 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CAccess.Assert(a_oID.ExIsValid());
 		CFunc.ShowLog("CSingularManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			SingularSDK.SetCustomUserId(a_oID);
 		}
+#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
-
+	
 	//! 로그를 전송한다
 	public void SendLog(string a_oName) {
 		this.SendLog(a_oName, null);
@@ -40,6 +42,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CAccess.Assert(a_oName.ExIsValid());
 		CFunc.ShowLog("CSingularManager.SendLog: {0}, {1}", KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
 
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
@@ -48,18 +51,19 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #if MSG_PACK_ENABLE
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_DEVICE_ID, CCommonAppInfoStorage.Instance.AppInfo.DeviceID);
 
-#if AUTO_LOG_PARAM_ENABLE
+#if AUTO_LOG_PARAMS_ENABLE
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_PLATFORM, CCommonAppInfoStorage.Instance.PlatformName);
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_USER_TYPE, CCommonUserInfoStorage.Instance.UserInfo.UserType.ToString());
 			
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_LOG_TIME, System.DateTime.UtcNow.ExToLongString());
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_INSTALL_TIME, CCommonAppInfoStorage.Instance.AppInfo.UTCInstallTime.ExToLongString());
-#endif			// #if AUTO_LOG_PARAM_ENABLE
+#endif			// #if AUTO_LOG_PARAMS_ENABLE
 #endif			// #if MSG_PACK_ENABLE
 
 			SingularSDK.Event(oDataList, a_oName);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
 	#endregion			// 함수
 
@@ -67,14 +71,17 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #if PURCHASE_MODULE_ENABLE
 	//! 결제 로그를 전송한다
 	public void SendPurchaseLog(Product a_oProduct, Dictionary<string, object> a_oDataList) {
+		CAccess.Assert(a_oProduct != null);
 		CFunc.ShowLog("CSingularManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			SingularSDK.InAppPurchase(myProduct, a_oDataList);
+			SingularSDK.InAppPurchase(a_oProduct, a_oDataList);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 함수

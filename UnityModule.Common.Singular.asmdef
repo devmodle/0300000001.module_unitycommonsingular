@@ -3,8 +3,11 @@
     "references": [
         "UnityModule.Common.Define",
         "UnityModule.Common.Access",
+        "UnityModule.Common.Factory",
+        "UnityModule.Common.Extension",
         "UnityModule.Common.Func",
-        "UnityModule.Common.Utility"
+        "UnityModule.Common.Utility",
+        "UnityModule.Singular"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
