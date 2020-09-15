@@ -12,7 +12,6 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	#region 함수
 	//! 분석 유저 식별자를 변경한다
 	public void SetAnalyticsUserID(string a_oID) {
-		CAccess.Assert(a_oID.ExIsValid());
 		CFunc.ShowLog("CSingularManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
@@ -30,8 +29,6 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 	//! 로그를 전송한다
 	public void SendLog(string a_oName, string a_oParam, List<string> a_oDataList) {
-		CAccess.Assert(a_oParam.ExIsValid());
-
 		this.SendLog(a_oName, new Dictionary<string, object>() {
 			[a_oParam] = a_oDataList.ExToString(KCDefine.B_TOKEN_CSV_STRING)
 		});
@@ -39,7 +36,6 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 	//! 로그를 전송한다
 	public void SendLog(string a_oName, Dictionary<string, object> a_oDataList) {
-		CAccess.Assert(a_oName.ExIsValid());
 		CFunc.ShowLog("CSingularManager.SendLog: {0}, {1}", KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
 
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
@@ -71,7 +67,6 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #if PURCHASE_MODULE_ENABLE
 	//! 결제 로그를 전송한다
 	public void SendPurchaseLog(Product a_oProduct, Dictionary<string, object> a_oDataList) {
-		CAccess.Assert(a_oProduct != null);
 		CFunc.ShowLog("CSingularManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
