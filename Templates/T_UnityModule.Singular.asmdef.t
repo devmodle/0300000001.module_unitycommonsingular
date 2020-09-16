@@ -1,10 +1,9 @@
 {
     "name": "UnityModule.Singular",
-    "references": [],
-    "includePlatforms": [
-        "Android",
-        "iOS"
+    "references": [
+        "UnityEngine.Purchasing"
     ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
