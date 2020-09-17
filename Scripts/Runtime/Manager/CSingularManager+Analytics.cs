@@ -14,12 +14,12 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public void SetAnalyticsUserID(string a_oID) {
 		CFunc.ShowLog("CSingularManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			SingularSDK.SetCustomUserId(a_oID);
 		}
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	
 	//! 로그를 전송한다
