@@ -24,16 +24,22 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		m_oSingularSDK = CFactory.CreateCloneObj<SingularSDK>(KCDefine.U_OBJ_NAME_SINGULAR_SDK,
 			CResManager.Instance.GetPrefab(KCDefine.U_OBJ_PATH_SINGULAR_SDK),
 			this.gameObject);
+
+		CAccess.Assert(m_oSingularSDK != null);
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 
 	//! 초기화
-	public virtual void Init(System.Action<CSingularManager, bool> a_oCallback) {
-		CFunc.ShowLog("CSingularManager.Init");
+	public virtual void Init(string a_oAPIKey, string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) {
+		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
+		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_oAPIKey, a_oAPISecret);
 		
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 가능 할 경우
 		if(!this.IsInit && CAccess.IsMobilePlatform()) {
+			m_oSingularSDK.SingularAPIKey = a_oAPIKey;
+			m_oSingularSDK.SingularAPISecret = a_oAPISecret;
+
 			this.IsInit = true;
 			SingularSDK.InitializeSingularSDK();
 
