@@ -5,11 +5,11 @@ using UnityEngine;
 #if SINGULAR_MODULE_ENABLE
 //! 싱귤러 관리자
 public partial class CSingularManager : CSingleton<CSingularManager> {
-	#region 컴포넌트
+	#region 변수
 #if UNITY_IOS || UNITY_ANDROID
 	private SingularSDK m_oSingularSDK = null;
 #endif			// #if UNITY_IOS || UNITY_ANDROID
-	#endregion			// 컴포넌트
+	#endregion			// 변수
 
 	#region 프로퍼티
 	public bool IsInit { get; private set; } = false;
