@@ -36,7 +36,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 가능 할 경우
-		if(!this.IsInit && CAccess.IsMobilePlatform()) {
+		if(!this.IsInit && CAccess.IsMobile()) {
 			m_oSingularSDK.SingularAPIKey = a_oAPIKey;
 			m_oSingularSDK.SingularAPISecret = a_oAPISecret;
 
