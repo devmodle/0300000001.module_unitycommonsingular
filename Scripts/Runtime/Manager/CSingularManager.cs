@@ -33,14 +33,15 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public virtual void Init(string a_oAPIKey, string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) {
 		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
 		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_oAPIKey, a_oAPISecret);
-		
-#if UNITY_IOS || UNITY_ANDROID
-		// 초기화 가능 할 경우
-		if(!this.IsInit && CAccess.IsMobile()) {
+
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+		// 초기화 되었을 경우
+		if(this.IsInit) {
+			a_oCallback?.Invoke(this, true);
+		} else {
 			m_oSingularSDK.SingularAPIKey = a_oAPIKey;
 			m_oSingularSDK.SingularAPISecret = a_oAPISecret;
 
-			this.IsInit = true;
 			SingularSDK.InitializeSingularSDK();
 
 #if MSG_PACK_ENABLE
@@ -51,10 +52,13 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #else
 			SingularSDK.TrackingOptIn();
 #endif			// #if MSG_PACK_ENABLE
-		}
-#endif			// #if UNITY_IOS || UNITY_ANDROID
 
-		a_oCallback?.Invoke(this, this.IsInit);
+			this.IsInit = true;
+			a_oCallback?.Invoke(this, this.IsInit);
+		}
+#else
+		a_oCallback?.Invoke(this, false);
+#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
 	#endregion			// 함수
 }
