@@ -34,7 +34,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
 		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_oAPIKey, a_oAPISecret);
 
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
@@ -58,7 +58,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		}
 #else
 		a_oCallback?.Invoke(this, false);
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
 }
