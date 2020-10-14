@@ -43,11 +43,20 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			m_oSingularSDK.SingularAPISecret = a_oAPISecret;
 
 			SingularSDK.InitializeSingularSDK();
-			
+
+#if SINGULAR_ANALYTICS_ENABLE
 			// 약관 동의가 필요 할 경우
 			if(!CCommonUserInfoStorage.Instance.UserInfo.IsAgree) {
-				SingularSDK.TrackingOptIn();
+				SingularSDK.TrackingOptIn();	
 			}
+
+#if !ANALYTICS_TEST_ENABLE && (!ADHOC_BUILD && !STORE_BUILD)
+			SingularSDK.StopAllTracking();
+#endif			// #if !ANALYTICS_TEST_ENABLE && (!ADHOC_BUILD && !STORE_BUILD)
+#else
+			SingularSDK.TrackingOptIn();
+			SingularSDK.StopAllTracking();
+#endif			// SINGULAR_ANALYTICS_ENABLE
 
 			this.IsInit = true;
 			a_oCallback?.Invoke(this, this.IsInit);
