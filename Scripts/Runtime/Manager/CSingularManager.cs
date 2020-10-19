@@ -31,10 +31,11 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 	//! 초기화
 	public virtual void Init(string a_oAPIKey, string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) {
-		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
 		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_oAPIKey, a_oAPISecret);
 
 #if UNITY_IOS || UNITY_ANDROID
+		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
+		
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
