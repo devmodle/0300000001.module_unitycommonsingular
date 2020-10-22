@@ -21,6 +21,17 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		}
 #endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 	}
+
+	//! 메세지 토큰을 변경한다
+	public void SetMsgToken(string a_oToken) {
+#if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_IOS
+		SingularSDK.RegisterDeviceTokenForUninstall(a_oToken);
+#else
+		Singular.setFCMDeviceToken(a_oToken);
+#endif			// #if UNITY_IOS
+#endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+	}
 	
 	//! 로그를 전송한다
 	public void SendLog(string a_oName) {
