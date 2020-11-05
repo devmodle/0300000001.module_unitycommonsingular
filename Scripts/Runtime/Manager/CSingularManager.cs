@@ -6,9 +6,8 @@ using UnityEngine;
 //! 싱귤러 관리자
 public partial class CSingularManager : CSingleton<CSingularManager> {
 	#region 변수
-#if UNITY_IOS || UNITY_ANDROID
 	private SingularSDK m_oSingularSDK = null;
-#endif			// #if UNITY_IOS || UNITY_ANDROID
+	private System.Action<CSingularManager, bool> m_oInitCallback = null;
 	#endregion			// 변수
 
 	#region 프로퍼티
@@ -20,13 +19,11 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public override void Awake() {
 		base.Awake();
 
-#if UNITY_IOS || UNITY_ANDROID
 		m_oSingularSDK = CFactory.CreateCloneObj<SingularSDK>(KCDefine.U_OBJ_NAME_SINGULAR_SDK,
 			CResManager.Instance.GetPrefab(KCDefine.U_OBJ_PATH_SINGULAR_SDK),
 			this.gameObject);
 
 		CAccess.Assert(m_oSingularSDK != null);
-#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 
 	//! 초기화
@@ -40,6 +37,8 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
 		} else {
+			m_oInitCallback = a_oCallback;
+
 			m_oSingularSDK.SingularAPIKey = a_oAPIKey;
 			m_oSingularSDK.SingularAPISecret = a_oAPISecret;
 
@@ -59,13 +58,26 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			SingularSDK.StopAllTracking();
 #endif			// SINGULAR_ANALYTICS_ENABLE
 
-			this.IsInit = true;
-			a_oCallback?.Invoke(this, this.IsInit);
+			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
 #else
 		a_oCallback?.Invoke(this, false);
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
+
+	#region 조건부 함수
+#if UNITY_IOS || UNITY_ANDROID
+	//! 초기화 되었을 경우
+	private void OnInit() {
+		CScheduleManager.Instance.AddCallback(KCDefine.U_KEY_SINGULAR_M_INIT_CALLBACK, () => {
+			CFunc.ShowLog("CSingularManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
+
+			this.IsInit = true;
+			m_oInitCallback?.Invoke(this, this.IsInit);
+		});
+	}
+#endif			// #if UNITY_IOS || UNITY_ANDROID
+	#endregion			// 조건부 함수
 }
 #endif			// #if SINGULAR_MODULE_ENABLE
