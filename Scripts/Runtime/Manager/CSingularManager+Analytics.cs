@@ -58,10 +58,10 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_DEVICE_ID, 
 				CCommonAppInfoStorage.Instance.AppInfo.DeviceID);
 
-#if AUTO_LOG_PARAMS_ENABLE
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_PLATFORM, 
 				CCommonAppInfoStorage.Instance.Platform);
 
+#if AUTO_LOG_PARAMS_ENABLE
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_USER_TYPE, 
 				CCommonUserInfoStorage.Instance.UserInfo.UserType.ToString());
 			
