@@ -74,7 +74,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			CFunc.ShowLog("CSingularManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
 
 			this.IsInit = true;
-			m_oInitCallback?.Invoke(this, this.IsInit);
+			CFunc.Invoke(ref m_oInitCallback, this, this.IsInit);
 		});
 	}
 #endif			// #if UNITY_IOS || UNITY_ANDROID
