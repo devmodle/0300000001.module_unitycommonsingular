@@ -56,7 +56,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 #if SINGULAR_ANALYTICS_ENABLE
 			// 약관 동의가 필요 할 경우
-			if(!CCommonUserInfoStorage.Instance.UserInfo.IsAgree) {
+			if(!CCommonUserInfoStorage.Inst.UserInfo.IsAgree) {
 				SingularSDK.TrackingOptIn();	
 			}
 
@@ -80,7 +80,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #if UNITY_IOS || UNITY_ANDROID
 	//! 초기화 되었을 경우
 	private void OnInit() {
-		CScheduleManager.Instance.AddCallback(KCDefine.U_KEY_SINGULAR_M_INIT_CALLBACK, () => {
+		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_SINGULAR_M_INIT_CALLBACK, () => {
 			CFunc.ShowLog("CSingularManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
 
 			this.IsInit = true;
