@@ -19,11 +19,21 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public override void Awake() {
 		base.Awake();
 
-		m_oSingularSDK = CFactory.CreateCloneObj<SingularSDK>(KCDefine.U_OBJ_NAME_SINGULAR_SDK,
-			CResManager.Instance.GetPrefab(KCDefine.U_OBJ_PATH_SINGULAR_SDK),
-			this.gameObject);
+		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_NAME_SINGULAR_SDK, null);
+		oObj.SetActive(false);
 
-		CAccess.Assert(m_oSingularSDK != null);
+#if UNITY_EDITOR
+		oObj.transform.SetParent(this.transform, false);
+#endif			// #if UNITY_EDITOR
+
+		m_oSingularSDK = oObj.AddComponent<SingularSDK>();
+		m_oSingularSDK.InitializeOnAwake = false;
+	}
+
+	//! 초기화
+	public override void Start() {
+		base.Start();
+		m_oSingularSDK.gameObject.SetActive(true);
 	}
 
 	//! 초기화
