@@ -12,7 +12,10 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	#region 함수
 	//! 분석 유저 식별자를 변경한다
 	public void SetAnalyticsUserID(string a_oID) {
-		CFunc.ShowLog("CSingularManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
+		CAccess.Assert(a_oID.ExIsValid());
+
+		CFunc.ShowLog("CSingularManager.SetAnalyticsUserID: {0}", 
+			KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
 #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화 되었을 경우
@@ -24,6 +27,8 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 	//! 메세지 토큰을 변경한다
 	public void SetMsgToken(string a_oToken) {
+		CAccess.Assert(a_oToken.ExIsValid());
+
 #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 #if UNITY_IOS
 		SingularSDK.RegisterDeviceTokenForUninstall(a_oToken);
@@ -32,22 +37,13 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #endif			// #if UNITY_IOS
 #endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 	}
-	
-	//! 로그를 전송한다
-	public void SendLog(string a_oName) {
-		this.SendLog(a_oName, null);
-	}
-
-	//! 로그를 전송한다
-	public void SendLog(string a_oName, string a_oParams, List<string> a_oDataList) {
-		this.SendLog(a_oName, new Dictionary<string, object>() {
-			[a_oParams] = a_oDataList.ExToString(KCDefine.B_TOKEN_CSV_STRING)
-		});
-	}
 
 	//! 로그를 전송한다
 	public void SendLog(string a_oName, Dictionary<string, object> a_oDataList) {
-		CFunc.ShowLog("CSingularManager.SendLog: {0}, {1}", KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
+		CAccess.Assert(a_oName.ExIsValid());
+
+		CFunc.ShowLog("CSingularManager.SendLog: {0}, {1}", 
+			KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
 
 #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
@@ -82,14 +78,17 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	#region 조건부 함수
 #if PURCHASE_MODULE_ENABLE
 	//! 결제 로그를 전송한다
-	public void SendPurchaseLog(Product a_oProduct, Dictionary<string, object> a_oDataList) {
-		CFunc.ShowLog("CSingularManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
+	public void SendPurchaseLog(Product a_oProduct) {
+		CAccess.Assert(a_oProduct != null);
+		
+		CFunc.ShowLog("CSingularManager.SendPurchaseLog: {0}", 
+			KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
 #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			SingularSDK.InAppPurchase(a_oProduct, a_oDataList);
+			SingularSDK.InAppPurchase(a_oProduct, null);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 #endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)

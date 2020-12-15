@@ -22,12 +22,12 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_NAME_SINGULAR_SDK, null);
 		oObj.SetActive(false);
 
+		m_oSingularSDK = oObj.AddComponent<SingularSDK>();
+		m_oSingularSDK.InitializeOnAwake = false;
+
 #if UNITY_EDITOR
 		oObj.transform.SetParent(this.transform, false);
 #endif			// #if UNITY_EDITOR
-
-		m_oSingularSDK = oObj.AddComponent<SingularSDK>();
-		m_oSingularSDK.InitializeOnAwake = false;
 	}
 
 	//! 초기화
@@ -37,12 +37,13 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	}
 
 	//! 초기화
-	public virtual void Init(string a_oAPIKey, string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) {
+	public virtual void Init(string a_oAPIKey, 
+		string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) 
+	{
+		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
 		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_oAPIKey, a_oAPISecret);
 
 #if UNITY_IOS || UNITY_ANDROID
-		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
-		
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
