@@ -33,7 +33,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #if UNITY_IOS
 		SingularSDK.RegisterDeviceTokenForUninstall(a_oToken);
 #else
-		Singular.setFCMDeviceToken(a_oToken);
+		SingularSDK.setFCMDeviceToken(a_oToken);
 #endif			// #if UNITY_IOS
 #endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 	}
