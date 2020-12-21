@@ -1,15 +1,16 @@
 {
     "name": "UnityModule.Common.Singular",
+    "rootNamespace": "",
     "references": [
+        "UnityModule.Singular",
         "UnityModule.Common.Define",
-		"UnityModule.Common.Access",
-		"UnityModule.Common.Factory",
-		"UnityModule.Common.Extension",
-		"UnityModule.Common.Func",
-		"UnityModule.Common.Utility",
-		"UnityModule.Common.Externals",
-        "UnityEngine.Purchasing",
-        "UnityModule.Singular"
+        "UnityModule.Common.Access",
+        "UnityModule.Common.Factory",
+        "UnityModule.Common.Extension",
+        "UnityModule.Common.Func",
+        "UnityModule.Common.Utility",
+        "UnityModule.Common.Externals",
+        "UnityEngine.Purchasing"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
