@@ -19,7 +19,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public override void Awake() {
 		base.Awake();
 
-		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_NAME_SINGULAR_SDK, null);
+		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_N_SINGULAR_SDK, null);
 		oObj.SetActive(false);
 
 		m_oSingularSDK = oObj.AddComponent<SingularSDK>();
