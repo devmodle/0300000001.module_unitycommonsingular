@@ -69,7 +69,9 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			SingularSDK.StopAllTracking();
 #endif			// SINGULAR_ANALYTICS_ENABLE
 
-			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
+			this.ExLateCallFunc((a_oSender, a_oParams) => {
+				this.OnInit();
+			});
 		}
 #else
 		a_oCallback?.Invoke(this, false);
