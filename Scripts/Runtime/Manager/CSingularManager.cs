@@ -37,9 +37,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	}
 
 	//! 초기화
-	public virtual void Init(string a_oAPIKey, 
-		string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) 
-	{
+	public virtual void Init(string a_oAPIKey, string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) {
 		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
 		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_oAPIKey, a_oAPISecret);
 
@@ -69,9 +67,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			SingularSDK.StopAllTracking();
 #endif			// SINGULAR_ANALYTICS_ENABLE
 
-			this.ExLateCallFunc((a_oSender, a_oParams) => {
-				this.OnInit();
-			});
+			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
 #else
 		a_oCallback?.Invoke(this, false);
@@ -85,8 +81,8 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	private void OnInit() {
 		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_SINGULAR_M_INIT_CALLBACK, () => {
 			CFunc.ShowLog("CSingularManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
-
 			this.IsInit = true;
+			
 			CFunc.Invoke(ref m_oInitCallback, this, this.IsInit);
 		});
 	}
