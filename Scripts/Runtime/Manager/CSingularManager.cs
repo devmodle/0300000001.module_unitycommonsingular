@@ -5,7 +5,15 @@ using UnityEngine;
 #if SINGULAR_MODULE_ENABLE
 //! 싱귤러 관리자
 public partial class CSingularManager : CSingleton<CSingularManager> {
+	//! 매개 변수
+	public struct STParams {
+		public string m_oAPIKey;
+		public string m_oAPISecret;
+	}
+
 	#region 변수
+	private STParams m_stParams;
+	
 	private SingularSDK m_oSingularSDK = null;
 	private System.Action<CSingularManager, bool> m_oInitCallback = null;
 	#endregion			// 변수
@@ -37,19 +45,20 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	}
 
 	//! 초기화
-	public virtual void Init(string a_oAPIKey, string a_oAPISecret, System.Action<CSingularManager, bool> a_oCallback) {
-		CAccess.Assert(a_oAPIKey.ExIsValid() && a_oAPISecret.ExIsValid());
-		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_oAPIKey, a_oAPISecret);
+	public virtual void Init(STParams a_stParams, System.Action<CSingularManager, bool> a_oCallback) {
+		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid() && a_stParams.m_oAPISecret.ExIsValid());
+		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_stParams.m_oAPIKey, a_stParams.m_oAPISecret);
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
 		} else {
+			m_stParams = a_stParams;
 			m_oInitCallback = a_oCallback;
 
-			m_oSingularSDK.SingularAPIKey = a_oAPIKey;
-			m_oSingularSDK.SingularAPISecret = a_oAPISecret;
+			m_oSingularSDK.SingularAPIKey = a_stParams.m_oAPIKey;
+			m_oSingularSDK.SingularAPISecret = a_stParams.m_oAPISecret;
 
 			SingularSDK.InitializeSingularSDK();
 
