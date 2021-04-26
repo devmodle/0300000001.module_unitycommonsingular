@@ -64,7 +64,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 #if SINGULAR_ANALYTICS_ENABLE
 			// 약관 동의가 필요 할 경우
-			if(!CCommonGameInfoStorage.Inst.GameInfo.IsAgree) {
+			if(!CCommonAppInfoStorage.Inst.AppInfo.IsAgree) {
 				SingularSDK.TrackingOptIn();	
 			}
 
