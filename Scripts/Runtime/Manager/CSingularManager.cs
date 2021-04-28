@@ -47,7 +47,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	//! 초기화
 	public virtual void Init(STParams a_stParams, System.Action<CSingularManager, bool> a_oCallback) {
 		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid() && a_stParams.m_oAPISecret.ExIsValid());
-		CFunc.ShowLog("CSingularManager.Init: {0}, {1}", a_stParams.m_oAPIKey, a_stParams.m_oAPISecret);
+		CFunc.ShowLog($"CSingularManager.Init: {a_stParams.m_oAPIKey}, {a_stParams.m_oAPISecret}");
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
