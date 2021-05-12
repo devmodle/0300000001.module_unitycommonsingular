@@ -27,7 +27,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public override void Awake() {
 		base.Awake();
 
-		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_N_SINGULAR_SDK, null);
+		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_N_SINGULAR_M_SINGULAR_SDK, null);
 		oObj.SetActive(false);
 
 		m_oSingularSDK = oObj.AddComponent<SingularSDK>();
@@ -59,6 +59,10 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 			m_oSingularSDK.SingularAPIKey = a_stParams.m_oAPIKey;
 			m_oSingularSDK.SingularAPISecret = a_stParams.m_oAPISecret;
+
+#if UNITY_IOS
+			m_oSingularSDK.waitForTrackingAuthorizationWithTimeoutInterval = KCDefine.U_TIMEOUT_SINGULAR_M_AUTH_TRACKING;
+#endif			// #if UNITY_IOS
 
 			SingularSDK.InitializeSingularSDK();
 
