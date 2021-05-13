@@ -61,7 +61,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			m_oSingularSDK.SingularAPISecret = a_stParams.m_oAPISecret;
 
 #if UNITY_IOS
-			m_oSingularSDK.waitForTrackingAuthorizationWithTimeoutInterval = KCDefine.U_TIMEOUT_SINGULAR_M_AUTH_TRACKING;
+			m_oSingularSDK.waitForTrackingAuthorizationWithTimeoutInterval = KCDefine.U_TIMEOUT_SINGULAR_M_AGREE_TRACKING;
 #endif			// #if UNITY_IOS
 
 			SingularSDK.InitializeSingularSDK();
