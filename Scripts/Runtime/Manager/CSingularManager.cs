@@ -67,8 +67,8 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			SingularSDK.InitializeSingularSDK();
 
 #if SINGULAR_ANALYTICS_ENABLE
-			// 약관 동의가 필요 할 경우
-			if(!CCommonAppInfoStorage.Inst.AppInfo.IsAgree) {
+			// 추적 동의 상태 일 경우
+			if(CCommonAppInfoStorage.Inst.AppInfo.IsAgreeTracking) {
 				SingularSDK.TrackingOptIn();	
 			}
 
