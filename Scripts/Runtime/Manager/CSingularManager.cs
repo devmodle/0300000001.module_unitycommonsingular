@@ -14,7 +14,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	#region 변수
 	private STParams m_stParams;
 	
-	private SingularSDK m_oSingularSDK = null;
+	private SingularSDK m_oSingular = null;
 	private System.Action<CSingularManager, bool> m_oInitCallback = null;
 	#endregion			// 변수
 
@@ -27,21 +27,18 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public override void Awake() {
 		base.Awake();
 
-		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_N_SINGULAR_M_SINGULAR_SDK, null);
+		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_N_SINGULAR_M_SINGULAR, null);
 		oObj.SetActive(false);
-
-		m_oSingularSDK = oObj.AddComponent<SingularSDK>();
-		m_oSingularSDK.InitializeOnAwake = false;
-
-#if UNITY_EDITOR
 		oObj.transform.SetParent(this.transform, false);
-#endif			// #if UNITY_EDITOR
+
+		m_oSingular = oObj.AddComponent<SingularSDK>();
+		m_oSingular.InitializeOnAwake = false;
 	}
 
 	//! 초기화
 	public override void Start() {
 		base.Start();
-		m_oSingularSDK.gameObject.SetActive(true);
+		m_oSingular.gameObject.SetActive(true);
 	}
 
 	//! 초기화
@@ -57,11 +54,11 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 			m_stParams = a_stParams;
 			m_oInitCallback = a_oCallback;
 
-			m_oSingularSDK.SingularAPIKey = a_stParams.m_oAPIKey;
-			m_oSingularSDK.SingularAPISecret = a_stParams.m_oAPISecret;
+			m_oSingular.SingularAPIKey = a_stParams.m_oAPIKey;
+			m_oSingular.SingularAPISecret = a_stParams.m_oAPISecret;
 
 #if UNITY_IOS
-			m_oSingularSDK.waitForTrackingAuthorizationWithTimeoutInterval = KCDefine.U_TIMEOUT_SINGULAR_M_AGREE_TRACKING;
+			m_oSingular.waitForTrackingAuthorizationWithTimeoutInterval = KCDefine.U_TIMEOUT_SINGULAR_M_AGREE_TRACKING;
 #endif			// #if UNITY_IOS
 
 			SingularSDK.InitializeSingularSDK();

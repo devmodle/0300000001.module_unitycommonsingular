@@ -41,8 +41,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CAccess.Assert(a_oName.ExIsValid());
 		CFunc.ShowLog($"CSingularManager.SendLog: {a_oName}, {a_oDataList}", KCDefine.B_LOG_COLOR_PLUGIN);
 
-#if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
-#if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			var oDataList = a_oDataList ?? new Dictionary<string, object>();
@@ -58,8 +57,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 			SingularSDK.Event(oDataList, a_oName);
 		}
-#endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-#endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 	}
 	#endregion			// 함수
 
@@ -70,14 +68,12 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CAccess.Assert(a_oProduct != null);
 		CFunc.ShowLog($"CSingularManager.SendPurchaseLog: {a_oProduct}", KCDefine.B_LOG_COLOR_PLUGIN);
 
-#if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
-#if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			SingularSDK.InAppPurchase(a_oProduct, null);
 		}
-#endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-#endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 함수
