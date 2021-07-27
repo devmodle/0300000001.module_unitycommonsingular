@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 #if SINGULAR_MODULE_ENABLE
 //! 싱귤러 관리자
