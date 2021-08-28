@@ -14,9 +14,11 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 	#region 변수
 	private STParams m_stParams;
-	
-	private SingularSDK m_oSingular = null;
 	private System.Action<CSingularManager, bool> m_oInitCallback = null;
+
+#if UNITY_IOS || UNITY_ANDROID
+	private SingularSDK m_oSingular = null;
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	#endregion			// 변수
 
 	#region 프로퍼티
@@ -28,18 +30,23 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 	public override void Awake() {
 		base.Awake();
 
+#if UNITY_IOS || UNITY_ANDROID
 		var oObj = CFactory.CreateObj(KCDefine.U_OBJ_N_SINGULAR_M_SINGULAR, null);
 		oObj.SetActive(false);
 		oObj.transform.SetParent(this.transform, false);
 
 		m_oSingular = oObj.AddComponent<SingularSDK>();
 		m_oSingular.InitializeOnAwake = false;
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 
 	//! 초기화
 	public override void Start() {
 		base.Start();
+
+#if UNITY_IOS || UNITY_ANDROID
 		m_oSingular.gameObject.SetActive(true);
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 
 	//! 초기화
@@ -64,19 +71,14 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 			SingularSDK.InitializeSingularSDK();
 
-#if SINGULAR_ANALYTICS_ENABLE
 			// 추적 동의 상태 일 경우
 			if(CCommonAppInfoStorage.Inst.AppInfo.IsAgreeTracking) {
 				SingularSDK.TrackingOptIn();	
 			}
 
-#if !ANALYTICS_TEST_ENABLE && (!ADHOC_BUILD && !STORE_BUILD)
+#if !SINGULAR_ANALYTICS_ENABLE || !(ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 			SingularSDK.StopAllTracking();
-#endif			// #if !ANALYTICS_TEST_ENABLE && (!ADHOC_BUILD && !STORE_BUILD)
-#else
-			SingularSDK.TrackingOptIn();
-			SingularSDK.StopAllTracking();
-#endif			// SINGULAR_ANALYTICS_ENABLE
+#endif			// #if !SINGULAR_ANALYTICS_ENABLE || !(ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 
 			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
