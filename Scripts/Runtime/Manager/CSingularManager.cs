@@ -56,8 +56,8 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 	//! 초기화
 	public virtual void Init(STParams a_stParams, STCallbackParams a_stCallbackParams) {
-		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid() && a_stParams.m_oAPISecret.ExIsValid());
 		CFunc.ShowLog($"CSingularManager.Init: {a_stParams.m_oAPIKey}, {a_stParams.m_oAPISecret}");
+		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid() && a_stParams.m_oAPISecret.ExIsValid());
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
@@ -97,10 +97,10 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 #if UNITY_IOS || UNITY_ANDROID
 	// 초기화 되었을 경우
 	private void OnInit() {
-		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_SINGULAR_M_INIT_CALLBACK, () => {
-			CFunc.ShowLog("CSingularManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
+		CFunc.ShowLog("CSingularManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
+
+		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_SINGULAR_M_INIT_CALLBACK, () => {	
 			this.IsInit = true;
-			
 			CFunc.Invoke(ref m_stCallbackParams.m_oCallback, this, this.IsInit);
 		});
 	}
