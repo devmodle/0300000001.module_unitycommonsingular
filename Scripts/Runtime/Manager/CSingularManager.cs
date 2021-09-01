@@ -81,9 +81,9 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 				SingularSDK.TrackingOptIn();	
 			}
 
-#if !SINGULAR_ANALYTICS_ENABLE || !(ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#if !SINGULAR_ANALYTICS_ENABLE || !(ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 			SingularSDK.StopAllTracking();
-#endif			// #if !SINGULAR_ANALYTICS_ENABLE || !(ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#endif			// #if !SINGULAR_ANALYTICS_ENABLE || !(ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 
 			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}

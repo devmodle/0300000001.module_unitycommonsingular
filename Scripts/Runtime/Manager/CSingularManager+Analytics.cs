@@ -16,25 +16,25 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CFunc.ShowLog($"CSingularManager.SetAnalyticsUserID: {a_oID}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oID.ExIsValid());
 
-#if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#if (UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			SingularSDK.SetCustomUserId(a_oID);
 		}
-#endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE
 	}
 
 	//! 메세지 토큰을 변경한다
 	public void SetMsgToken(string a_oToken) {
 		CAccess.Assert(a_oToken.ExIsValid());
 
-#if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#if (UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE
 #if UNITY_IOS
 		SingularSDK.RegisterDeviceTokenForUninstall(a_oToken);
 #else
 		SingularSDK.SetFCMDeviceToken(a_oToken);
 #endif			// #if UNITY_IOS
-#endif			// #if SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE
 	}
 
 	//! 로그를 전송한다
@@ -42,7 +42,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CFunc.ShowLog($"CSingularManager.SendLog: {a_oName}, {a_oDataDict}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oName.ExIsValid());
 
-#if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#if ((UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			var oDataDict = a_oDataDict ?? new Dictionary<string, object>();
@@ -58,7 +58,7 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 
 			SingularSDK.Event(oDataDict, a_oName);
 		}
-#endif			// #if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#endif			// #if ((UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 	}
 	#endregion			// 함수
 
@@ -69,12 +69,12 @@ public partial class CSingularManager : CSingleton<CSingularManager> {
 		CFunc.ShowLog($"CSingularManager.SendPurchaseLog: {a_oProduct}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oProduct != null);
 
-#if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#if ((UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			SingularSDK.InAppPurchase(a_oProduct, null);
 		}
-#endif			// #if (SINGULAR_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#endif			// #if ((UNITY_IOS || UNITY_ANDROID) && SINGULAR_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 함수
