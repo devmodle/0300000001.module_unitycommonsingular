@@ -1,18 +1,18 @@
 {
   "name": "module.unitycommonsingular",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "displayName": "Module.UnityCommonSingular",
   "author": {
     "name": "dante",
     "email": "are2341@nate.com"
   },
   "dependencies": {
-    "module.unitycommondefine": "https://github.com/devmodle/00000001.module_unitycommondefine_client.git#1.7.3",
-    "module.unitycommonaccess": "https://github.com/devmodle/00000001.module_unitycommonaccess_client.git#1.7.3",
-    "module.unitycommonfactory": "https://github.com/devmodle/00000001.module_unitycommonfactory_client.git#1.7.3",
-    "module.unitycommonextension": "https://github.com/devmodle/00000001.module_unitycommonextension_client.git#1.7.3",
-	"module.unitycommonfunc": "https://github.com/devmodle/00000001.module_unitycommonfunc_client.git#1.7.3",
-	"module.unitycommonutility": "https://github.com/devmodle/00000001.module_unitycommonutility_client.git#1.7.3",
-    "module.unitycommonexternals": "https://github.com/devmodle/00000001.module_unitycommonexternals_client.git#1.7.3"
+    "module.unitycommondefine": "https://github.com/devmodle/00000001.module_unitycommondefine_client.git#1.7.4",
+    "module.unitycommonaccess": "https://github.com/devmodle/00000001.module_unitycommonaccess_client.git#1.7.4",
+    "module.unitycommonfactory": "https://github.com/devmodle/00000001.module_unitycommonfactory_client.git#1.7.4",
+    "module.unitycommonextension": "https://github.com/devmodle/00000001.module_unitycommonextension_client.git#1.7.4",
+    "module.unitycommonfunc": "https://github.com/devmodle/00000001.module_unitycommonfunc_client.git#1.7.4",
+    "module.unitycommonutility": "https://github.com/devmodle/00000001.module_unitycommonutility_client.git#1.7.4",
+    "module.unitycommonexternals": "https://github.com/devmodle/00000001.module_unitycommonexternals_client.git#1.7.4"
   }
 }
